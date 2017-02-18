@@ -1,0 +1,73 @@
+# Serbian translation for stellarium
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the stellarium package.
+# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: stellarium\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-06-11 13:18+0700\n"
+"PO-Revision-Date: 2016-02-05 14:12+0000\n"
+"Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
+"Language-Team: Serbian <gnom@prevod.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-07-12 05:54+0000\n"
+"X-Generator: Launchpad (build 18115)\n"
+"Language: sr\n"
+
+#. (itstool) path: component/name
+#: stellarium.appdata.xml:6
+msgid "Stellarium"
+msgstr "Стеларијум"
+
+#. (itstool) path: component/summary
+#: stellarium.appdata.xml:7
+msgid "Desktop Planetarium"
+msgstr "Планетаријум на радној површини"
+
+#. (itstool) path: description/p
+#: stellarium.appdata.xml:9
+msgid ""
+"Stellarium renders 3D photo-realistic skies in real time with OpenGL. It "
+"displays stars, constellations, planets and nebulae, and has many other "
+"features including multiple panoramic landscapes, fog, light pollution "
+"simulation and a built-in scripting engine."
+msgstr ""
+"Стеларијум приказује 3д реалистичне фотографије неба у стварном времену "
+"користећи ОпенГЛ. Приказује звезде, сазвежђа, планете, маглине...  Садржи и "
+"много других могућности као што су промена пејзажа, додавање магле, приказ "
+"светлосног загађења, као и уграђени метод за прављење скрипти — програмчића "
+"који објашњавају неку природну појаву или приказују одређени део неба."
+
+#. (itstool) path: description/p
+#: stellarium.appdata.xml:10
+msgid ""
+"Stellarium comes with a star catalogue of about 600 thousand stars and it is "
+"possible to download extra catalogues with up to 210 million stars."
+msgstr ""
+"Стеларијум долази са звезданим каталогом са око 600 хиљада звезда, а могуће "
+"је преузети додатни каталог са више од 210 милиона звезда."
+
+#. (itstool) path: description/p
+#: stellarium.appdata.xml:11
+msgid ""
+"Stellarium has multiple sky cultures - see the constellations from the "
+"traditions of Polynesian, Inuit, Navajo, Korean, Lakota, Egyptian and "
+"Chinese astronomers, as well as the traditional Western constellations."
+msgstr ""
+"Стеларијум има опцију за преглед сазвежђа различитих култура. Погледајте "
+"традиционална сазвежђа Полинезије, Инуита, Египћана, Кинеза, као и "
+"традиционална сазвежђа западних култура."
+
+#. (itstool) path: description/p
+#: stellarium.appdata.xml:12
+msgid ""
+"It is also possible to visit other planets in the solar system - see what "
+"the sky looked like to the Apollo astronauts, or what the rings of Saturn "
+"looks like from Titan."
+msgstr ""
+"Такође је могуће посетити остале планете Сунчевог система. Можете погледати "
+"како је небо изгледало астронаутима мисије Аполо, или како Сатурнови "
+"прстенови изгледају са Титана."

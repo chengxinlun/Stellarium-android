@@ -1,0 +1,73 @@
+# Greek translation for stellarium
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the stellarium package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stellarium\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-06-11 13:18+0700\n"
+"PO-Revision-Date: 2015-04-19 19:02+0000\n"
+"Last-Translator: Christos Sotiropoulos <csot@otenet.gr>\n"
+"Language-Team: Greek <el@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-07-12 05:54+0000\n"
+"X-Generator: Launchpad (build 18115)\n"
+
+#. (itstool) path: component/name
+#: stellarium.appdata.xml:6
+msgid "Stellarium"
+msgstr "Stellarium"
+
+#. (itstool) path: component/summary
+#: stellarium.appdata.xml:7
+msgid "Desktop Planetarium"
+msgstr "Επιτραπέζιο πλανητάριο"
+
+#. (itstool) path: description/p
+#: stellarium.appdata.xml:9
+msgid ""
+"Stellarium renders 3D photo-realistic skies in real time with OpenGL. It "
+"displays stars, constellations, planets and nebulae, and has many other "
+"features including multiple panoramic landscapes, fog, light pollution "
+"simulation and a built-in scripting engine."
+msgstr ""
+"Το Stellarium αποδίδει τρισδιάστατους φωτορεαλιστικούς ουρανούς σε "
+"πραγματικό χρόνο με το OpenGL. Δείχνει αστέρια, αστερισμούς, πλανήτες και "
+"νεφελώματα και έχει πολλές λειτουργίες που περιλαμβάνουν πολλαπλά πανοραμικά "
+"τοπία, ομίχλη, εξομοίωση φωτορύπανσης και ενσωματωμένη μηχανή σεναρίων."
+
+#. (itstool) path: description/p
+#: stellarium.appdata.xml:10
+msgid ""
+"Stellarium comes with a star catalogue of about 600 thousand stars and it is "
+"possible to download extra catalogues with up to 210 million stars."
+msgstr ""
+"Το Stellarium περιέχει κατάλογο με πάνω από 600 χιλιάδες άστρα και με την "
+"δυνατότητα μεταφόρτωσης καταλόγων με μέχρι 210 εκατομμύρια άστρα"
+
+#. (itstool) path: description/p
+#: stellarium.appdata.xml:11
+msgid ""
+"Stellarium has multiple sky cultures - see the constellations from the "
+"traditions of Polynesian, Inuit, Navajo, Korean, Lakota, Egyptian and "
+"Chinese astronomers, as well as the traditional Western constellations."
+msgstr ""
+"Το Stellarium έχει πολλαπλούς ουράνιους πολιτισμούς - δείτε τους αστερισμούς "
+"από τις παραδόσεις των Πολυνησίων, Ινουίτ, Ναβάχο, Κορεατών, Λακότα, "
+"Αιγυπτίων και Κινέζων αστρονόμων όπως επίσης και των παραδοσιακών δυτικών "
+"πολιτισμών."
+
+#. (itstool) path: description/p
+#: stellarium.appdata.xml:12
+msgid ""
+"It is also possible to visit other planets in the solar system - see what "
+"the sky looked like to the Apollo astronauts, or what the rings of Saturn "
+"looks like from Titan."
+msgstr ""
+"Είναι δυνατόν να επισκεφτείτε άλλους πλανήτες στο ηλιακό σύστημα - δείτε πως "
+"έβλεπαν τον ουρανό οι αστροναύτες της αποστολής Απόλλο ή πως εμφανίζονται οι "
+"δακτύλιοι του Κρόνου από τον δορυφόρο του Τιτάνα."
