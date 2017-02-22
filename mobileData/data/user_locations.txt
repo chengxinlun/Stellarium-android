@@ -1,5 +1,6 @@
 # User Locations file
 # Author: Cheng Xinlun, Feb 20, 2017
+# Last update: Cheng Xinlun, Feb 22, 2017
 # Format:
 # + One record per line
 # + Fields in a record are delimited with the tab character
@@ -19,4 +20,7 @@
 #   - TimeZone (empty=auto)
 #   - Planet (empty=Earth)
 #   - LandscapeKey (empty=auto)
-*Zijin,THU	Beijing	cn	O	163.326	40.01569N	116.33608E	33	7	Asia/Shanghai
+#
+# Use *FSL (frequent selected locations) for any location that is frequently used
+#
+Zijin, THU	Beijing	*FSL	O	12.198	40.01569N	116.33608E	33	7	Asia/Shanghai

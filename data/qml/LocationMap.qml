@@ -53,8 +53,8 @@ Item {
 		}
 		MouseArea {
 			anchors.fill: parent
-            // Remove choose location on map since the screen is often too small to make precise point
-            // (Cheng Xinlun, Feb 20, 2017)
+            // Remove location selection from world map since the screen is often too small to make precise point
+            // (Cheng Xinlun, Feb 22, 2017)
             // onClicked: {
             //	 if (root.enabled)
             //		 image.setValue(mouse.x, mouse.y)
