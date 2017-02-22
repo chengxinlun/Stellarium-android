@@ -53,10 +53,12 @@ Item {
 		}
 		MouseArea {
 			anchors.fill: parent
-			onClicked: {
-				if (root.enabled)
-					image.setValue(mouse.x, mouse.y)
-			}
+            // Remove choose location on map since the screen is often too small to make precise point
+            // (Cheng Xinlun, Feb 20, 2017)
+            // onClicked: {
+            //	 if (root.enabled)
+            //		 image.setValue(mouse.x, mouse.y)
+            // }
 		}
 		function setValue(x, y) {
 			var newLatitude = -(y / image.height * 180 - 90)
