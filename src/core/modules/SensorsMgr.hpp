@@ -40,5 +40,8 @@ private:
 	qreal sensorX, sensorY, sensorZ;
 	qreal magnetX, magnetY, magnetZ;
 	qreal sensorAzimuth;
+    // Begin modification: add magnetic declination correction
+    double magd;
+    // End modification
 	bool firstMeasure;
 };

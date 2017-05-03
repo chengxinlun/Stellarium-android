@@ -99,8 +99,8 @@ Item {
 			root.fullInfoVisible = !root.fullInfoVisible
 		}
 		rotation: root.fullInfoVisible ? 180 : 0
-		height: 18*rootStyle.scale
-		width: 18*rootStyle.scale
+        height: 27*rootStyle.scale // Modified: moreButton too small to click, +50% size (Cheng Xinlun, Apr 18,2017)
+        width: 27*rootStyle.scale // Modified: moreButton too small to click, +50% size (Cheng Xinlun, Apr 18,2017)
 		anchors {
 			horizontalCenter: nameAndInfoLine.horizontalCenter
 			top: nameAndInfoLine.bottom

@@ -1,0 +1,23 @@
+WMMF-1
+# A World Magnetic Model (Format 1) file.  For documentation on the
+# format of this file see
+# http://geographiclib.sf.net/html/magnetic.html#magneticformat
+Name            wmm2015
+Description     World Magnetic Model 2015
+URL             http://ngdc.noaa.gov/geomag/WMM/DoDWMM.shtml
+Publisher       National Oceanic and Atmospheric Administration
+ReleaseDate     2014-12-15
+DataCutOff      2014-10-01
+ConversionDate  2014-12-15
+DataVersion     1
+Radius          6371200
+Epoch           2015
+MinTime         2015
+MaxTime         2020
+MinHeight       -10000
+MaxHeight       1000000
+
+# The coefficients are stored in a file obtained by appending ".cof" to
+# the name of this file.  The coefficients were obtained from
+# WMM.COF in the wmm2015 distribution.
+ID              WMM2015A
