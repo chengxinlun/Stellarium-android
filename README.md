@@ -8,6 +8,8 @@ Original source code: http://stelladata.noctua-software.com/stellarium-mobile/st
 
 Assets from https://code.launchpad.net/stellarium/
 
+Copyright: Original Stellarium dev team
+
 ## Prerequisites
 Qt-for-android (preferably qt 5.6 or higher)
 
@@ -18,8 +20,8 @@ detaily documented in the document of qt. Please refer to qt.io for info.
 Python PIL
 
 If you want to create low-resolution resources, please run 
-create-mobile-data.sh. However, it will call PIL so you might want to 
-have it installed firsthand.
+create-mobile-data.sh. It will call PIL so you might want to have it installed 
+firsthand.
 
 ## Installation
 The original INSTALL file nearly states nothing useful, but some links are 
@@ -28,5 +30,7 @@ included all assets in this respository as I might modify them in the
 future.
 
 ## Change Log
-###February 20, 2017
+### May 4, 2017
+New feature: magnetic declination correction
+### February 20, 2017
 Minor bug fix
