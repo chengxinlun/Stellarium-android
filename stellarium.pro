@@ -84,101 +84,14 @@ HEADERS += \
 	src/StelAndroid.hpp \
 	src/StelLogger.hpp \
 	src/StelMainView.hpp \
-    src/core/external/gsatellite/gException.hpp \
-    src/core/external/gsatellite/gSatTEME.hpp \
-    src/core/external/gsatellite/gTime.hpp \
-    src/core/external/gsatellite/gVector.hpp \
-    src/core/external/gsatellite/gVectorTempl.hpp \
-    src/core/external/gsatellite/sgp4ext.h \
-    src/core/external/gsatellite/sgp4io.h \
-    src/core/external/gsatellite/sgp4unit.h \
-    src/core/external/gsatellite/stdsat.h \
-    src/core/external/GeographicLib/include/GeographicLib/Accumulator.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/AlbersEqualArea.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/AzimuthalEquidistant.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/CassiniSoldner.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/CircularEngine.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/Constants.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/DMS.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/Ellipsoid.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/EllipticFunction.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/GARS.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/Geocentric.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/GeoCoords.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/Geodesic.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/GeodesicExact.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/GeodesicLine.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/GeodesicLineExact.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/Geohash.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/Geoid.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/Georef.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/Gnomonic.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/GravityCircle.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/GravityModel.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/LambertConformalConic.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/LocalCartesian.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/MagneticCircle.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/MagneticModel.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/Math.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/MGRS.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/NearestNeighbor.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/NormalGravity.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/OSGB.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/PolarStereographic.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/PolygonArea.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/Rhumb.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/SphericalEngine.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/SphericalHarmonic.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/SphericalHarmonic1.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/SphericalHarmonic2.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/TransverseMercator.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/TransverseMercatorExact.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/Utility.hpp \
-    src/core/external/GeographicLib/include/GeographicLib/UTMUPS.hpp
+
 
 SOURCES += \
 	src/CLIProcessor.cpp \
 	src/main.cpp \
 	src/StelLogger.cpp \
 	src/StelMainView.cpp \
-    src/core/external/GeographicLib/src/Accumulator.cpp \
-    src/core/external/GeographicLib/src/AlbersEqualArea.cpp \
-    src/core/external/GeographicLib/src/AzimuthalEquidistant.cpp \
-    src/core/external/GeographicLib/src/CassiniSoldner.cpp \
-    src/core/external/GeographicLib/src/CircularEngine.cpp \
-    src/core/external/GeographicLib/src/DMS.cpp \
-    src/core/external/GeographicLib/src/Ellipsoid.cpp \
-    src/core/external/GeographicLib/src/EllipticFunction.cpp \
-    src/core/external/GeographicLib/src/GARS.cpp \
-    src/core/external/GeographicLib/src/Geocentric.cpp \
-    src/core/external/GeographicLib/src/GeoCoords.cpp \
-    src/core/external/GeographicLib/src/Geodesic.cpp \
-    src/core/external/GeographicLib/src/GeodesicExact.cpp \
-    src/core/external/GeographicLib/src/GeodesicExactC4.cpp \
-    src/core/external/GeographicLib/src/GeodesicLine.cpp \
-    src/core/external/GeographicLib/src/GeodesicLineExact.cpp \
-    src/core/external/GeographicLib/src/Geohash.cpp \
-    src/core/external/GeographicLib/src/Geoid.cpp \
-    src/core/external/GeographicLib/src/Georef.cpp \
-    src/core/external/GeographicLib/src/Gnomonic.cpp \
-    src/core/external/GeographicLib/src/GravityCircle.cpp \
-    src/core/external/GeographicLib/src/GravityModel.cpp \
-    src/core/external/GeographicLib/src/LambertConformalConic.cpp \
-    src/core/external/GeographicLib/src/LocalCartesian.cpp \
-    src/core/external/GeographicLib/src/MagneticCircle.cpp \
-    src/core/external/GeographicLib/src/MagneticModel.cpp \
-    src/core/external/GeographicLib/src/Math.cpp \
-    src/core/external/GeographicLib/src/MGRS.cpp \
-    src/core/external/GeographicLib/src/NormalGravity.cpp \
-    src/core/external/GeographicLib/src/OSGB.cpp \
-    src/core/external/GeographicLib/src/PolarStereographic.cpp \
-    src/core/external/GeographicLib/src/PolygonArea.cpp \
-    src/core/external/GeographicLib/src/Rhumb.cpp \
-    src/core/external/GeographicLib/src/SphericalEngine.cpp \
-    src/core/external/GeographicLib/src/TransverseMercator.cpp \
-    src/core/external/GeographicLib/src/TransverseMercatorExact.cpp \
-    src/core/external/GeographicLib/src/Utility.cpp \
-    src/core/external/GeographicLib/src/UTMUPS.cpp
+
 
 android {
 	HEADERS += \
@@ -314,7 +227,58 @@ HEADERS += \
 	src/core/planetsephems/sideral_time.h \
 	src/core/planetsephems/stellplanet.h \
 	src/core/planetsephems/tass17.h \
-	src/core/planetsephems/vsop87.h
+        src/core/planetsephems/vsop87.h \
+        src/core/external/gsatellite/gException.hpp \
+        src/core/external/gsatellite/gSatTEME.hpp \
+        src/core/external/gsatellite/gTime.hpp \
+        src/core/external/gsatellite/gVector.hpp \
+        src/core/external/gsatellite/gVectorTempl.hpp \
+        src/core/external/gsatellite/sgp4ext.h \
+        src/core/external/gsatellite/sgp4io.h \
+        src/core/external/gsatellite/sgp4unit.h \
+        src/core/external/gsatellite/stdsat.h \
+        src/core/external/GeographicLib/include/GeographicLib/Accumulator.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/AlbersEqualArea.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/AzimuthalEquidistant.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/CassiniSoldner.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/CircularEngine.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/Constants.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/DMS.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/Ellipsoid.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/EllipticFunction.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/GARS.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/Geocentric.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/GeoCoords.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/Geodesic.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/GeodesicExact.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/GeodesicLine.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/GeodesicLineExact.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/Geohash.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/Geoid.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/Georef.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/Gnomonic.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/GravityCircle.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/GravityModel.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/LambertConformalConic.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/LocalCartesian.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/MagneticCircle.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/MagneticModel.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/Math.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/MGRS.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/NearestNeighbor.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/NormalGravity.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/OSGB.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/PolarStereographic.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/PolygonArea.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/Rhumb.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/SphericalEngine.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/SphericalHarmonic.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/SphericalHarmonic1.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/SphericalHarmonic2.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/TransverseMercator.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/TransverseMercatorExact.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/Utility.hpp \
+    src/core/external/GeographicLib/include/GeographicLib/UTMUPS.hpp
 
 SOURCES += \
 	src/core/MultiLevelJsonBase.cpp \
@@ -361,7 +325,7 @@ SOURCES += \
 	src/core/StelVideoMgr.cpp \
 	src/core/StelViewportEffect.cpp \
 	src/core/TrailGroup.cpp \
-    src/core/modules/gSatWrapper.cpp \
+        src/core/modules/gSatWrapper.cpp \
 	src/core/modules/Atmosphere.cpp \
 	src/core/modules/Comet.cpp \
 	src/core/modules/Constellation.cpp \
@@ -418,7 +382,45 @@ SOURCES += \
 	src/core/planetsephems/sideral_time.c \
 	src/core/planetsephems/stellplanet.c \
 	src/core/planetsephems/tass17.c \
-	src/core/planetsephems/vsop87.c
+        src/core/planetsephems/vsop87.c \
+    src/core/external/GeographicLib/src/Accumulator.cpp \
+    src/core/external/GeographicLib/src/AlbersEqualArea.cpp \
+    src/core/external/GeographicLib/src/AzimuthalEquidistant.cpp \
+    src/core/external/GeographicLib/src/CassiniSoldner.cpp \
+    src/core/external/GeographicLib/src/CircularEngine.cpp \
+    src/core/external/GeographicLib/src/DMS.cpp \
+    src/core/external/GeographicLib/src/Ellipsoid.cpp \
+    src/core/external/GeographicLib/src/EllipticFunction.cpp \
+    src/core/external/GeographicLib/src/GARS.cpp \
+    src/core/external/GeographicLib/src/Geocentric.cpp \
+    src/core/external/GeographicLib/src/GeoCoords.cpp \
+    src/core/external/GeographicLib/src/Geodesic.cpp \
+    src/core/external/GeographicLib/src/GeodesicExact.cpp \
+    src/core/external/GeographicLib/src/GeodesicExactC4.cpp \
+    src/core/external/GeographicLib/src/GeodesicLine.cpp \
+    src/core/external/GeographicLib/src/GeodesicLineExact.cpp \
+    src/core/external/GeographicLib/src/Geohash.cpp \
+    src/core/external/GeographicLib/src/Geoid.cpp \
+    src/core/external/GeographicLib/src/Georef.cpp \
+    src/core/external/GeographicLib/src/Gnomonic.cpp \
+    src/core/external/GeographicLib/src/GravityCircle.cpp \
+    src/core/external/GeographicLib/src/GravityModel.cpp \
+    src/core/external/GeographicLib/src/LambertConformalConic.cpp \
+    src/core/external/GeographicLib/src/LocalCartesian.cpp \
+    src/core/external/GeographicLib/src/MagneticCircle.cpp \
+    src/core/external/GeographicLib/src/MagneticModel.cpp \
+    src/core/external/GeographicLib/src/Math.cpp \
+    src/core/external/GeographicLib/src/MGRS.cpp \
+    src/core/external/GeographicLib/src/NormalGravity.cpp \
+    src/core/external/GeographicLib/src/OSGB.cpp \
+    src/core/external/GeographicLib/src/PolarStereographic.cpp \
+    src/core/external/GeographicLib/src/PolygonArea.cpp \
+    src/core/external/GeographicLib/src/Rhumb.cpp \
+    src/core/external/GeographicLib/src/SphericalEngine.cpp \
+    src/core/external/GeographicLib/src/TransverseMercator.cpp \
+    src/core/external/GeographicLib/src/TransverseMercatorExact.cpp \
+    src/core/external/GeographicLib/src/Utility.cpp \
+    src/core/external/GeographicLib/src/UTMUPS.cpp
 
 OTHER_FILES += \
 	data/qml/AboutDialog.qml \

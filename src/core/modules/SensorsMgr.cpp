@@ -218,7 +218,7 @@ void SensorsMgr::update(double deltaTime)
 
 	rot2d(&x, &y, -roll);
 	rot2d(&y, &z, pitch);
-    float az = std::atan2(-x, z) - magd; // Magnetic declination correction (Cheng Xinlun, Apr 18, 2017)
+    float az = std::atan2(-x, z) - magd * 0.0174533; // Magnetic declination correction (Cheng Xinlun, Apr 18, 2017)
 	StelUtils::spheToRect(az, pitch, viewDirection);
 	mmgr->setViewDirectionJ2000(StelApp::getInstance().getCore()->altAzToJ2000(viewDirection));
 }
