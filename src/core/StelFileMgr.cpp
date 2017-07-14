@@ -41,6 +41,7 @@
 
 // Initialize static members.
 QStringList StelFileMgr::fileLocations;
+QString StelFileMgr::cuserDir;
 QString StelFileMgr::userDir;
 QString StelFileMgr::screenshotDir;
 QString StelFileMgr::installDir;
@@ -57,26 +58,43 @@ void StelFileMgr::init()
 #elif defined(Q_OS_MAC)
 	userDir = QDir::homePath() + "/Library/Application Support/Stellarium";
 #else
-	userDir = QDir::homePath() + "/.stellarium";
+    // Modifiable config file (Cheng Xinlun, May 14 2017)
+    // TODO: request permissions on running
+    userDir = QDir::homePath() + "/.stellarium";
+    cuserDir = QString::fromLocal8Bit(qgetenv("EXTERNAL_STORAGE")) + "/stellarium";
 #endif
 
-	if (!QFile(userDir).exists())
+    if (!QFile(cuserDir).exists())
 	{
-		qWarning() << "User config directory does not exist: " << QDir::toNativeSeparators(userDir);
+        qWarning() << "User config directory does not exist: " << QDir::toNativeSeparators(cuserDir);
 	}
 	try
 	{
-		makeSureDirExistsAndIsWritable(userDir);
+        makeSureDirExistsAndIsWritable(cuserDir);
+        fileLocations.append(cuserDir);  // Higher priority than default dir
 	}
 	catch (std::runtime_error &e)
-	{
-		qFatal("Error: cannot create user config directory: %s", e.what());
+    {
+        qWarning() << "Cannot write to SD card, will not add custom user directory";
 	}
 
+    // Default user location
+    if (!QFile(userDir).exists())
+    {
+        qWarning() << "User config directory does not exist: " << QDir::toNativeSeparators(userDir);
+    }
+    try
+    {
+        makeSureDirExistsAndIsWritable(userDir);
+    }
+    catch (std::runtime_error &e)
+    {
+        qFatal("Error: cannot create user config directory: %s", e.what());
+    }
+    // OK, now we have the userDir set, add it to the search path
+    fileLocations.append(userDir);
 
-	// OK, now we have the userDir set, add it to the search path
-	fileLocations.append(userDir);
-	
+
 	// Determine install data directory location
 
 	// If we are running from the build tree, we use the files from the current directory

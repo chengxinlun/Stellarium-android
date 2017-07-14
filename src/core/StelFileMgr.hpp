@@ -208,6 +208,9 @@ private:
 
 	static QStringList fileLocations;
 
+    // Custom user dir
+    static QString cuserDir;
+
 	//! Used to store the user data directory
 	static QString userDir;
 
