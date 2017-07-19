@@ -1,7 +1,7 @@
 
 TARGET = stellarium
 VERSION = 0.12.3
-MOBILE_VERSION = 1.25.1
+MOBILE_VERSION = 1.24.2
 INCLUDEPATH += \
 	. src/ src/core src/core/modules src/core/external \
 	src/core/external/glues_stel/source src/core/external/kfilter \
@@ -37,7 +37,7 @@ android {
 	ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 	ANDROID_PACKAGE = com.noctuasoftware.stellarium
         ANDROID_MINIMUM_VERSION = 16
-	ANDROID_TARGET_VERSION = 24
+        ANDROID_TARGET_VERSION = 23
 	ANDROID_APP_NAME = Stellarium Mobile
 
 	data_dir.source = mobileData/data
@@ -449,3 +449,9 @@ OTHER_FILES += \
 	data/qml/AdvancedDialog.qml \
 	data/qml/AnglePicker.qml \
 	data/qml/ValuePicker.qml \
+
+contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
+    ANDROID_EXTRA_LIBS = \
+        /home/cheng/Documents/stallerium_android/stellarium-mobile-1.24/../../../Downloads/qt5-openssl/openssl-1.1.0f/libcrypto.so \
+        $$PWD/../../../Downloads/qt5-openssl/openssl-1.1.0f/libssl.so
+}
