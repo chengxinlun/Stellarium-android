@@ -397,18 +397,44 @@ QStringList StelQuickStelItem::getCountryNames() const
 	return ret;
 }
 
-QStringList StelQuickStelItem::getCityNames(const QString& country) const
+QStringList StelQuickStelItem::getCityNames(const QString& country, const QString& search) const
 {
 	QStringList ret;
 	if (country.isEmpty()) return ret;
 	QList<StelLocation> allLocations = StelApp::getInstance().getLocationMgr().getAll();
 	foreach(const StelLocation& loc, allLocations)
 	{
-		if (loc.country == country)
-			ret << loc.name;
+        if (loc.country == country)
+        {
+            if (search.isEmpty())
+            {
+                ret << loc.name;
+            }
+            else
+            {
+                if (loc.name.contains(search))
+                    ret << loc.name;
+            }
+        }
 	}
 	ret.sort();
 	return ret;
+}
+
+bool StelQuickStelItem::testCityNames(const QString& country, const QString& search) const
+{
+    if (country.isEmpty()) return false;
+    if (search.isEmpty()) return true;
+    QList<StelLocation> allLocations = StelApp::getInstance().getLocationMgr().getAll();
+    foreach(const StelLocation& loc, allLocations)
+    {
+        if (loc.country == country)
+        {
+            if (loc.name.contains(search))
+                return true;
+        }
+    }
+    return false;
 }
 
 QString StelQuickStelItem::getLocation() const

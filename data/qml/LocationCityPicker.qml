@@ -18,6 +18,7 @@
  */
 
 import QtQuick 2.2
+import QtQuick.Controls 1.4
 
 StelDialog {
 	id: root
@@ -27,9 +28,23 @@ StelDialog {
 	property string country
 	property string city
 
+    TextField{
+         id: citySearchField
+         anchors.left: parent.left
+         width: root.country ? root.width / 2 : root.width
+         onTextChanged: {
+             if (text.length > 0 ) {
+                 root.applyFilter(text);
+             } else {
+                 root.reload();
+             }
+         }
+    }
+
 	ListView {
 		id: countriesList
 		anchors.left: parent.left
+        anchors.top: citySearchField.bottom
 		width: root.country ? root.width / 2 : root.width
 		Behavior on width {
 			NumberAnimation { easing.type: Easing.InOutQuad }
@@ -41,20 +56,22 @@ StelDialog {
 			selected: root.country === modelData
 			onClicked: root.country = modelData
 		}
-		model: stellarium.getCountryNames()
-		clip: true
+        model: stellarium.getCountryNames()
+        clip: true
 	}
 	ListView {
+        id: citiesList
+        anchors.top: citySearchField.bottom
 		anchors.left: countriesList.right
 		anchors.right: parent.right
-		height: root.height
+        height: root.height
 		delegate: StelListItem {
 			withArrow: false
 			text: qsTr(modelData)
 			selected: root.city === modelData
 			onClicked: root.city = modelData
 		}
-		model: stellarium.getCityNames(root.country)
+        model: stellarium.getCityNames(root.country, "")
 		clip: true
 	}
 
@@ -63,4 +80,23 @@ StelDialog {
 		stellarium.location = "%1, %2".arg(city).arg(country)
 		close();
 	}
+
+    function reload() {
+        var cList = stellarium.getCountryNames();
+        var temp = [];
+        for (var i = 0; i < cList.length; i++){
+            temp.push(cList[i])
+        }
+        countriesList.model = temp;
+    }
+    function applyFilter(cName){
+        var cList = stellarium.getCountryNames();
+        var temp = [];
+        for (var i = 0; i < cList.length; i++)
+        {
+            if (cList[i].includes(cName))
+                temp.push(cList[i])
+        }
+        countriesList.model = temp;
+    }
 }

@@ -94,7 +94,8 @@ public:
 	QString getCurrentSkyCultureHtmlDescription() const;
 	QString getCurrentSkyCultureBaseUrl() const;
 	Q_INVOKABLE QStringList getCountryNames() const;
-	Q_INVOKABLE QStringList getCityNames(const QString& country) const;
+    Q_INVOKABLE QStringList getCityNames(const QString& country, const QString& search) const;
+    Q_INVOKABLE bool testCityNames(const QString& country, const QString& search) const;
 	QString getLocation() const;
 	void setLocation(const QString locationId);
 	double getLatitude() const;
