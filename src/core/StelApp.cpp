@@ -395,16 +395,19 @@ void StelApp::init(QSettings* conf)
 	NebulaMgr* nebulas = new NebulaMgr();
 	nebulas->init();
 	getModuleMgr().registerModule(nebulas);
+    qDebug() << "Nebula inited";
 
 	// Init milky way
 	MilkyWay* milky_way = new MilkyWay();
 	milky_way->init();
 	getModuleMgr().registerModule(milky_way);
+    qDebug() << "Milky inited";
 
 	// Init sky image manager
 	skyImageMgr = new StelSkyLayerMgr();
 	skyImageMgr->init();
 	getModuleMgr().registerModule(skyImageMgr);
+    qDebug() << "Sky inited";
 
 	// Init audio manager
 	audioMgr = new StelAudioMgr();
@@ -416,6 +419,7 @@ void StelApp::init(QSettings* conf)
 	ConstellationMgr* asterisms = new ConstellationMgr(hip_stars);
 	asterisms->init();
 	getModuleMgr().registerModule(asterisms);
+    qDebug() << "Const inited";
 
 	// Landscape, atmosphere & cardinal points section
 	LandscapeMgr* landscape = new LandscapeMgr();
@@ -440,16 +444,19 @@ void StelApp::init(QSettings* conf)
 	Satellites* satellites = new Satellites();
 	satellites->init();
 	getModuleMgr().registerModule(satellites);
+    qDebug() << "Satellite inited";
 
 	// Sensors
 	SensorsMgr* sensors = new SensorsMgr();
 	sensors->init();
 	getModuleMgr().registerModule(sensors);
+    qDebug() << "Sensor inited";
 
 	// GPS
 	GPSMgr* gps = new GPSMgr();
 	gps->init();
 	getModuleMgr().registerModule(gps);
+    qDebug() << "GPS inited";
 
 	skyCultureMgr->init();
 

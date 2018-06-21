@@ -483,7 +483,6 @@ void StarMgr::loadData(QVariantMap starsConfig)
 		QVariantMap m = catV.toMap();
 		checkAndLoadCatalog(m);
 	}
-
 	for (int i=0; i<=NR_OF_HIP; i++)
 	{
 		hipIndex[i].a = 0;

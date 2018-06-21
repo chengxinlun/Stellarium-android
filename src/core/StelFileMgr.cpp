@@ -24,6 +24,7 @@
 #include <QString>
 #include <QDebug>
 #include <QStandardPaths>
+#include <QtAndroid>
 
 #include "StelUtils.hpp"
 
@@ -59,7 +60,13 @@ void StelFileMgr::init()
 	userDir = QDir::homePath() + "/Library/Application Support/Stellarium";
 #else
     // Modifiable config file (Cheng Xinlun, May 14 2017)
-    // TODO: request permissions on running
+    // Permission request done in Qt-5.10 (Cheng Xinlun, June 21 2018)
+    QStringList perms;
+    perms << "android.permission.WRITE_EXTERNAL_STORAGE" << "android.permission.ACCESS_FINE_LOCATION" << "android.permission.READ_EXTERNAL_STORAGE" << "android.permission.ACCESS_COARSE_LOCATION";
+    QtAndroid::PermissionResultMap checkPerms = QtAndroid::requestPermissionsSync(perms);
+    QHash<QString, QtAndroid::PermissionResult>::iterator i;
+    for (i = checkPerms.begin(); i != checkPerms.end(); i++)
+        qDebug() << i.key() << ": " << (i.value() == QtAndroid::PermissionResult::Granted);
     userDir = QDir::homePath() + "/.stellarium";
     cuserDir = QString::fromLocal8Bit(qgetenv("EXTERNAL_STORAGE")) + "/stellarium";
 #endif

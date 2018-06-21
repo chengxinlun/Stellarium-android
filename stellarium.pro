@@ -1,7 +1,7 @@
 
 TARGET = stellarium
 VERSION = 0.12.3
-MOBILE_VERSION = 1.24.3
+MOBILE_VERSION = 1.24.4
 INCLUDEPATH += \
 	. src/ src/core src/core/modules src/core/external \
 	src/core/external/glues_stel/source src/core/external/kfilter \
@@ -37,7 +37,7 @@ android {
 	ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 	ANDROID_PACKAGE = com.noctuasoftware.stellarium
         ANDROID_MINIMUM_VERSION = 16
-        ANDROID_TARGET_VERSION = 23
+        ANDROID_TARGET_VERSION = 26
 	ANDROID_APP_NAME = Stellarium Mobile
 
 	data_dir.source = mobileData/data
@@ -452,6 +452,15 @@ OTHER_FILES += \
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_EXTRA_LIBS = \
-        /home/cheng/Documents/stallerium_android/stellarium-mobile-1.24/../../../Downloads/qt5-openssl/openssl-1.1.0f/libcrypto.so \
-        $$PWD/../../../Downloads/qt5-openssl/openssl-1.1.0f/libssl.so
+        /home/cheng/stellarium/src/../openssl-1.1.0h/libcrypto.so \
+        $$PWD/../openssl-1.1.0h/libssl.so
 }
+
+DISTFILES += \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat
