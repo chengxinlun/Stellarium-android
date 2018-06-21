@@ -30,6 +30,9 @@ included all assets in this respository as I might modify them in the
 future.
 
 ## Change Log
+### June 21, 2018
+Android 8.0 support
+Runtime permission request
 ### May 4, 2017
 New feature: magnetic declination correction
 ### February 20, 2017
