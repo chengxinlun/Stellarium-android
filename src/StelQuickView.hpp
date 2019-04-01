@@ -55,7 +55,7 @@ class StelQuickView : public QQuickView
 public:
 	StelQuickView();
 	void init(class QSettings* conf);
-	void deinit();
+
 	//! Get the StelMainView singleton instance.
 	static StelQuickView& getInstance() {Q_ASSERT(singleton); return *singleton;}
 	bool getNightMode() const {return nightMode;}
@@ -65,40 +65,18 @@ signals:
 	void nightModeChanged(bool);
 protected slots:
 	void handleResize();
-	void paint();
-	void afterRendering();
 	void synchronize();
 	void showGui();
 protected:
-	//! Return the size of the underlying surface in pixel.
-	QSize surfaceSize() const;
 	bool eventFilter(QObject *, QEvent *) Q_DECL_OVERRIDE;
-	void resizeEvent(QResizeEvent*) Q_DECL_OVERRIDE;
 private:
 	static StelQuickView* singleton;
 	class QTimer* timer;
 	StelApp* stelApp;
 	float getScreenDensity() const;
-
-	struct Shader {
-		class QOpenGLShaderProgram* prog;
-		int texCoord;
-		int pos;
-		int texture;
-	};
-	Shader blitShader;
-	void createBlitShader();
-	QOpenGLFramebufferObject* createFbo();
-	void blit(QOpenGLFramebufferObject* fbo, Shader* shader);
-	// finalFbo contains the sky + the qml items.  We use for the night mode.
-	QScopedPointer<QOpenGLFramebufferObject> finalFbo;
-
-	// For night mode.
 	bool nightMode;
-	Shader nightViewShader;
-	void createNightViewShader();
-
 	bool quitRequested;
 private slots:
+	void beforeGlContextDestroyed();
 	void requestQuit();
 };

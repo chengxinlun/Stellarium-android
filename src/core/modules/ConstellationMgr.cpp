@@ -1057,11 +1057,11 @@ bool ConstellationMgr::loadBoundaries(const QString& boundaryFile)
 	i = 0;
 	while (!istr.atEnd())
 	{
-		points = new vector<Vec3f>;
-
 		num = 0;
 		istr >> num;
 		if(num == 0) continue;  // empty line
+
+		points = new vector<Vec3f>;
 
 		for (j=0;j<num;j++)
 		{
@@ -1100,7 +1100,6 @@ bool ConstellationMgr::loadBoundaries(const QString& boundaryFile)
 	}
 	dataFile.close();
 	qDebug() << "Loaded" << i << "constellation boundary segments";
-	delete points;
 
 	return true;
 }

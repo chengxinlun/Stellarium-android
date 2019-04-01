@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Suite 500, Boston, MA  02110-1335, USA.
  */
 
+#include "config.h"
 #include "StelMainView.hpp"
 #include "StelTranslator.hpp"
 #include "StelLogger.hpp"
@@ -113,6 +114,11 @@ int main(int argc, char **argv)
 	}
 #endif
 
+	// Set QSG_RENDER_LOOP so that the qml view doesn't use a different thread
+	// for the rendering.  This is not optimized, but might fix some random
+	// crashes on android.
+	setenv("QSG_RENDER_LOOP", "basic", 1);
+
 	QCoreApplication::setApplicationName("Stellarium Mobile");
 	QCoreApplication::setApplicationVersion(StelUtils::getApplicationVersion());
 	QCoreApplication::setOrganizationDomain("stellarium.org");
@@ -138,6 +144,7 @@ int main(int argc, char **argv)
 
 	// Init the file manager
 	StelFileMgr::init();
+    qDebug() << "StelFileMgr initialized.";
 
 	// Log command line arguments
 	QString argStr;
@@ -154,6 +161,7 @@ int main(int argc, char **argv)
 	// Start logging.
 	StelLogger::init(StelFileMgr::getUserDir()+"/log.txt");
 	StelLogger::writeLog(argStr);
+    qDebug() << "StelLogger initialized.";
 
 	// OK we start the full program.
 	// Print the console splash and get on with loading the program
@@ -192,7 +200,7 @@ int main(int argc, char **argv)
 		if (configFileFullPath.isEmpty())
 			qFatal("Could not create configuration file %s.", qPrintable(configName));
 	}
-    qDebug() << "Config file: " << configFileFullPath;
+        qDebug() << "Config file: " << configFileFullPath;
 	QSettings* confSettings = NULL;
 	if (StelFileMgr::exists(configFileFullPath))
 	{
@@ -311,12 +319,6 @@ int main(int argc, char **argv)
 	StelMainView mainWin;
 	mainWin.init(confSettings);
 	app.exec();
-	// XXX: for the moment on android we don't clean up, as there is a bug
-	// and I don't have time to fix it now.  I guess we should maybe cleanup
-	// before we call Qt.quit.
-#ifndef Q_OS_ANDROID
-	mainWin.deinit();
-#endif
 
 	delete confSettings;
 	StelLogger::deinit();

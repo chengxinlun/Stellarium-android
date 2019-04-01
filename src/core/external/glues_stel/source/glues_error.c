@@ -30,6 +30,7 @@
  * OpenGL ES 1.0 CM port of part of GLUES by Mike Gorchak <mike@malva.ua>
  */
 
+#include <qopengl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <QtGlobal>

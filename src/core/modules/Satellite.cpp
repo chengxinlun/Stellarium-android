@@ -66,6 +66,7 @@ Satellite::Satellite(const QString& identifier, const QVariantMap& map)
       hintColor(0.0,0.0,0.0),            
       lastUpdated(),
       pSatWrapper(NULL),
+      elAzPosition(0),
       visibility(0),
       phaseAngle(0.),
       lastEpochCompForOrbit(0.),
@@ -533,9 +534,11 @@ bool Satellite::operator <(const Satellite& another) const
 		return false;
 }
 
-void Satellite::draw(StelCore* core, StelPainter& painter, float)
+bool Satellite::draw(StelCore* core, StelPainter& painter, float)
 {
-	if (core->getJDay() < jdLaunchYearJan1) return;
+	if (core->getJDay() < jdLaunchYearJan1) return false;
+	if (elAzPosition.lengthSquared() == 0.0) return false;
+	bool ret = false;
 
 	XYZ = getJ2000EquatorialPos(core);
 	StelSkyDrawer* sd = core->getSkyDrawer();
@@ -561,6 +564,7 @@ void Satellite::draw(StelCore* core, StelPainter& painter, float)
 
 			Satellite::hintTexture->bind();
 			painter.drawSprite2dMode(xy[0], xy[1], 11);
+			ret |= true;
 		}
 	}
 
@@ -576,6 +580,7 @@ void Satellite::draw(StelCore* core, StelPainter& painter, float)
 		sd->preDrawPointSource(&painter);
 		if (mag <= sd->getLimitMagnitude())
 		{
+			ret |= true;
 			sd->computeRCMag(mag, &rcMag);
 			sd->drawPointSource(&painter, Vec3f(XYZ[0], XYZ[1], XYZ[2]), rcMag, color, true);
 			painter.setColor(color[0], color[1], color[2], 1);
@@ -591,6 +596,7 @@ void Satellite::draw(StelCore* core, StelPainter& painter, float)
 	}
 
 	if (orbitDisplayed && Satellite::orbitLinesFlag) drawOrbit(painter);
+	return ret;
 }
 
 

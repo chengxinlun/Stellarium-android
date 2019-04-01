@@ -222,24 +222,43 @@ void cometOrbitPosFunc(double jd,double xyz[3], void* userDataPtr)
 // Init and load the solar system data
 void SolarSystem::loadPlanets()
 {
-	qDebug() << "Loading Solar System data ...";
-	QStringList solarSystemFiles = StelFileMgr::findFileInAllPaths("data/ssystem.ini");
+	qDebug() << "Loading Solar System data (1: planets and moons) ...";
+	QString solarSystemFile = StelFileMgr::findFile("data/ssystem_major.ini");
+	if (solarSystemFile.isEmpty())
+	{
+		qWarning() << "ERROR while loading ssystem_major.ini (unable to find data/ssystem_major.ini): " << endl;
+		return;
+	}
+
+	if (!loadPlanets(solarSystemFile))
+	{
+		qWarning() << "ERROR while loading ssystem_major.ini: " << endl;
+		return;
+	}
+
+	qDebug() << "Loading Solar System data (2: minor bodies)...";
+	QStringList solarSystemFiles = StelFileMgr::findFileInAllPaths("data/ssystem_minor.ini");
 	if (solarSystemFiles.isEmpty())
 	{
-		qWarning() << "ERROR while loading ssysyem.ini (unable to find data/ssystem.ini): " << endl;
+		qWarning() << "ERROR while loading ssystem_minor.ini (unable to find data/ssystem_minor.ini): " << endl;
 		return;
 	}
 
 	foreach (const QString& solarSystemFile, solarSystemFiles)
 	{
 		if (loadPlanets(solarSystemFile))
+		{
+			qDebug() << "File ssystem_minor.ini is loaded successfully...";
 			break;
+		}
 		else
 		{
-			sun.clear();
-			moon.clear();
-			earth.clear();
+//			sun.clear();
+//			moon.clear();
+//			earth.clear();
+			//qCritical() << "We should not be here!";
 
+			qDebug() << "Removing minor bodies";
 			foreach (PlanetP p, systemPlanets)
 			{
 				p->satellites.clear();
@@ -247,6 +266,8 @@ void SolarSystem::loadPlanets()
 			}
 			systemPlanets.clear();
 			//Memory leak? What's the proper way of cleaning shared pointers?
+
+			// TODO: 0.16pre what about the orbits list?
 
 			//If the file is in the user data directory, rename it:
 			if (solarSystemFile.contains(StelFileMgr::getUserDir()))
@@ -319,7 +340,7 @@ bool SolarSystem::loadPlanets(const QString& filePath)
 	{
 		const QString secname = sections.at(i);
 		const QString englishName = pd.value(secname+"/name").toString();
-		const QString strParent = pd.value(secname+"/parent").toString();
+		const QString strParent = pd.value(secname+"/parent", "Sun").toString();
 		secNameMap[englishName] = secname;
 		if (strParent!="none" && !strParent.isEmpty() && !englishName.isEmpty())
 			parentMap[englishName] = strParent;
@@ -361,7 +382,7 @@ bool SolarSystem::loadPlanets(const QString& filePath)
 		totalPlanets++;
 		const QString secname = orderedSections.at(i);
 		const QString englishName = pd.value(secname+"/name").toString();
-		const QString strParent = pd.value(secname+"/parent").toString();
+		const QString strParent = pd.value(secname+"/parent", "Sun").toString(); // Obvious default, keep file entries simple.
 		PlanetP parent;
 		if (strParent!="none")
 		{
@@ -557,6 +578,7 @@ bool SolarSystem::loadPlanets(const QString& filePath)
 					time_at_pericenter = epoch - mean_anomaly / meanMotion;
 				}
 			}
+			const double orbitGoodDays=pd.value(secname+"/orbit_good", 1000).toDouble();
 			const double inclination = pd.value(secname+"/orbit_Inclination").toDouble()*(M_PI/180.0);
 			const double arg_of_pericenter = pd.value(secname+"/orbit_ArgOfPericenter").toDouble()*(M_PI/180.0);
 			const double ascending_node = pd.value(secname+"/orbit_AscendingNode").toDouble()*(M_PI/180.0);
@@ -582,6 +604,7 @@ bool SolarSystem::loadPlanets(const QString& filePath)
 							 ascending_node,
 							 arg_of_pericenter,
 							 time_at_pericenter,
+							 orbitGoodDays,
 							 meanMotion,
 							 parentRotObliquity,
 							 parent_rot_asc_node,
@@ -713,17 +736,17 @@ bool SolarSystem::loadPlanets(const QString& filePath)
 		if ((type == "asteroid" || type == "plutoid") && !englishName.contains("Pluto"))
 		{
 			p = PlanetP(new MinorPlanet(englishName,
-						    pd.value(secname+"/lighting").toBool(),
+						    pd.value(secname+"/lighting", true).toBool(),
 						    pd.value(secname+"/radius").toDouble()/AU,
 						    pd.value(secname+"/oblateness", 0.0).toDouble(),
-						    StelUtils::strToVec3f(pd.value(secname+"/color").toString()),
+						    StelUtils::strToVec3f(pd.value(secname+"/color", "1.0,1.0,1.0").toString()),
 						    pd.value(secname+"/albedo").toFloat(),
 						    pd.value(secname+"/tex_map").toString(),
 						    posfunc,
 						    userDataPtr,
 						    osculatingFunc,
 						    closeOrbit,
-						    pd.value(secname+"/hidden", 0).toBool(),
+						    pd.value(secname+"/hidden", false).toBool(),
 						    type));
 
 			QSharedPointer<MinorPlanet> mp =  p.dynamicCast<MinorPlanet>();
@@ -764,17 +787,17 @@ bool SolarSystem::loadPlanets(const QString& filePath)
 		else if (type == "comet")
 		{
 			p = PlanetP(new Comet(englishName,
-			               pd.value(secname+"/lighting").toBool(),
+			               pd.value(secname+"/lighting", true).toBool(),
 			               pd.value(secname+"/radius").toDouble()/AU,
 			               pd.value(secname+"/oblateness", 0.0).toDouble(),
-			               StelUtils::strToVec3f(pd.value(secname+"/color").toString()),
+			               StelUtils::strToVec3f(pd.value(secname+"/color", "1.0,1.0,1.0").toString()),
 			               pd.value(secname+"/albedo").toFloat(),
 			               pd.value(secname+"/tex_map").toString(),
 			               posfunc,
 			               userDataPtr,
 			               osculatingFunc,
 			               closeOrbit,
-				       pd.value(secname+"/hidden", 0).toBool(),
+				       pd.value(secname+"/hidden", false).toBool(),
 				       type));
 
 			QSharedPointer<Comet> mp =  p.dynamicCast<Comet>();
@@ -799,18 +822,20 @@ bool SolarSystem::loadPlanets(const QString& filePath)
 		}
 		else
 		{
+			bool lighting = pd.value(secname+"/lighting", true).toBool();
+			if (englishName == "Sun") lighting = false;
 			p = PlanetP(new Planet(englishName,
-					       pd.value(secname+"/lighting").toBool(),
+					       lighting,
 					       pd.value(secname+"/radius").toDouble()/AU,
 					       pd.value(secname+"/oblateness", 0.0).toDouble(),
-					       StelUtils::strToVec3f(pd.value(secname+"/color").toString()),
+					       StelUtils::strToVec3f(pd.value(secname+"/color", "1.0,1.0,1.0").toString()),
 					       pd.value(secname+"/albedo").toFloat(),
 					       pd.value(secname+"/tex_map").toString(),
 					       posfunc,
 					       userDataPtr,
 					       osculatingFunc,
 					       closeOrbit,
-					       pd.value(secname+"/hidden", 0).toBool(),
+					       pd.value(secname+"/hidden", false).toBool(),
 					       pd.value(secname+"/atmosphere", false).toBool(),
 					       type));
 		}
@@ -834,7 +859,10 @@ bool SolarSystem::loadPlanets(const QString& filePath)
 		double J2000NPoleRA = pd.value(secname+"/rot_pole_ra", 0.).toDouble()*M_PI/180.;
 		double J2000NPoleDE = pd.value(secname+"/rot_pole_de", 0.).toDouble()*M_PI/180.;
 
-		if(J2000NPoleRA || J2000NPoleDE)
+		// Guillaume: disabled for earth for the moment in the mobile version,
+		// because it leads to incorrect results.  For some reason we need to
+		// use an obliquity of -23° (instead of 23°)!
+		if ((J2000NPoleRA || J2000NPoleDE) && englishName != "Earth")
 		{
 			Vec3d J2000NPole;
 			StelUtils::spheToRect(J2000NPoleRA,J2000NPoleDE,J2000NPole);
@@ -846,19 +874,23 @@ bool SolarSystem::loadPlanets(const QString& filePath)
 
 			rotObliquity = (M_PI_2 - de);
 			rotAscNode = (ra + M_PI_2);
-
 			// qDebug() << "\tCalculated rotational obliquity: " << rotObliquity*180./M_PI << endl;
 			// qDebug() << "\tCalculated rotational ascending node: " << rotAscNode*180./M_PI << endl;
 		}
+		// Guillaume: force the rot_precession_rate value for earth because
+		// it has been removed in the new data, but the current mobile code
+		// still need it!
+		double precession_rate = pd.value(secname+"/rot_precession_rate",0.).toDouble();
+		if (englishName == "Earth") precession_rate = 1.39639;
 
 		p->setRotationElements(
-			pd.value(secname+"/rot_periode", pd.value(secname+"/orbit_Period", 24.).toDouble()).toDouble()/24.,
+			pd.value(secname+"/rot_periode", pd.value(secname+"/orbit_Period", 1.).toDouble()*24.).toDouble()/24.,
 			pd.value(secname+"/rot_rotation_offset",0.).toDouble(),
 			pd.value(secname+"/rot_epoch", J2000).toDouble(),
 			rotObliquity,
 			rotAscNode,
-			pd.value(secname+"/rot_precession_rate",0.).toDouble()*M_PI/(180*36525),
-			pd.value(secname+"/orbit_visualization_period",0.).toDouble());
+			precession_rate*M_PI/(180*36525),
+			pd.value(secname+"/orbit_visualization_period", fabs(pd.value(secname+"/orbit_Period", 1.).toDouble())).toDouble()); // this is given in days...
 
 
 		if (pd.value(secname+"/rings", 0).toBool()) {

@@ -501,6 +501,8 @@ GeodesicSearchResult::~GeodesicSearchResult(void)
 
 void GeodesicSearchResult::search(const QVector<SphericalCap>& convex, int maxSearchLevel)
 {
+	if (grid.getMaxLevel()<0)
+		return;
 	for (int i=grid.getMaxLevel();i>=0;i--)
 	{
 		inside[i] = zones[i];

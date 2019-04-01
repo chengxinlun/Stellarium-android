@@ -44,7 +44,7 @@ public:
 	//! Return a copy of text of the log file.
 	static const QString& getLog() {return log;}
 
-	static QString getLogFileName() {return logFile.fileName();}
+	static QString getLogFileName() {return logFile->fileName();}
 
 	//! Write the message plus a newline to the log file at $USERDIR/log.txt.
 	//! @param msg message to write.
@@ -53,7 +53,7 @@ public:
 	static void writeLog(QString msg);
 
 private:
-	static QFile logFile;
+	static QFile* logFile;
 	static QString log;
 };
 

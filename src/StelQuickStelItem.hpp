@@ -17,9 +17,9 @@
  * Foundation, Inc., 51 Franklin Street, Suite 500, Boston, MA  02110-1335, USA.
  */
 
-
+#include "config.h"
 #include <QDateTime>
-#include <QQuickItem>
+#include <QQuickFramebufferObject>
 
 // Special object that is just there so we can invoke some methods in the main thread.
 class MainThreadProxy : public QObject
@@ -32,7 +32,7 @@ public:
 	Q_INVOKABLE void setManualPosition(double latitude, double longitude);
 };
 
-class StelQuickStelItem : public QQuickItem
+class StelQuickStelItem : public QQuickFramebufferObject
 {
 	Q_OBJECT
 
@@ -44,6 +44,7 @@ class StelQuickStelItem : public QQuickItem
 	Q_PROPERTY(double jd READ getJd WRITE setJd NOTIFY timeChanged)
 	Q_PROPERTY(bool dragTimeMode READ getDragTimeMode WRITE setDragTimeMode NOTIFY dragTimeModeChanged)
 	Q_PROPERTY(double timeRate READ getTimeRate WRITE setTimeRate NOTIFY timeRateChanged)
+	Q_PROPERTY(double timeNow READ isTimeNow NOTIFY timeChanged)
 	Q_PROPERTY(QString printableTime READ getPrintableTime NOTIFY timeChanged)
 	Q_PROPERTY(int fps READ getFps NOTIFY timeChanged)
 	Q_PROPERTY(QString currentLandscapeName READ getCurrentLandscapeName WRITE setCurrentLandscapeName NOTIFY currentLandscapeChanged)
@@ -66,6 +67,7 @@ class StelQuickStelItem : public QQuickItem
 	Q_PROPERTY(int linesThickness READ getLinesThickness WRITE setLinesThickness NOTIFY LinesThicknessChanged)
 public:
 	StelQuickStelItem();
+	virtual Renderer* createRenderer() const Q_DECL_OVERRIDE;
 	QString getSelectedObjectName() const;
 	QString getSelectedObjectInfo() const;
 	QString getSelectedObjectShortInfo() const;
@@ -83,6 +85,7 @@ public:
 	double getTimeRate() const;
 	void setTimeRate(double value);
 	QString getPrintableTime() const;
+	bool isTimeNow() const;
 	int getFps() const;
 	Q_INVOKABLE QStringList getLandscapeNames() const;
 	QString getCurrentLandscapeName() const;

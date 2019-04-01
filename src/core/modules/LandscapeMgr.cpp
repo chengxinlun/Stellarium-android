@@ -346,8 +346,8 @@ bool LandscapeMgr::setCurrentLandscapeID(const QString& id)
 		newLandscape->setFlagShow(landscape->getFlagShow());
 		newLandscape->setFlagShowFog(landscape->getFlagShowFog());
 		delete landscape;
-		landscape = newLandscape;
 	}
+	landscape = newLandscape;
 	currentLandscapeID = id;
 
 	if (getFlagLandscapeSetsLocation())

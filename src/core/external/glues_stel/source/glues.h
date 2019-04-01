@@ -38,6 +38,7 @@
 #define __glues_h__
 
 #include <QtGlobal>
+#include <qopengl.h>
 
 #if defined(Q_OS_IOS)
 # include <OpenGLES/ES2/gl.h>

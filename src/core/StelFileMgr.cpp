@@ -79,6 +79,7 @@ void StelFileMgr::init()
 	{
         makeSureDirExistsAndIsWritable(cuserDir);
         fileLocations.append(cuserDir);  // Higher priority than default dir
+        qDebug() << "User config directory " << QDir::toNativeSeparators(cuserDir) << " added to list.";
 	}
 	catch (std::runtime_error &e)
     {
@@ -100,7 +101,7 @@ void StelFileMgr::init()
     }
     // OK, now we have the userDir set, add it to the search path
     fileLocations.append(userDir);
-
+    qDebug() << "User config directory " << QDir::toNativeSeparators(userDir) << " added to list.";
 
 	// Determine install data directory location
 
@@ -152,6 +153,7 @@ void StelFileMgr::init()
 	
 	// Then add the installation directory to the search path
 	fileLocations.append(installDir);
+    qDebug() << "Installation directory " << QDir::toNativeSeparators(installDir) << " added to list.";
 
 	if (!QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).isEmpty())
 		screenshotDir = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation)[0];

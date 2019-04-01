@@ -90,7 +90,7 @@ public:
 	//!    x: position[0]
 	//!    y: position[1]
 	//!    z: position[2]
-	gVector getPos()
+	const gVector &getPos() const
 	{
 		return m_Position;
 	}

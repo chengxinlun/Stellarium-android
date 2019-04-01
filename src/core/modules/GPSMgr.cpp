@@ -36,10 +36,9 @@ GPSMgr::GPSMgr() :
 {
 	singleton = this;
 	setObjectName("GPSMgr");
-	// On iOS we need to create the position source in the main thread.
-#ifdef Q_OS_IOS
-	moveToThread(StelQuickView::getInstance().thread());
-#endif
+	// Move to thread disabled for the moment since we probably don't
+	// need it now that qml doesn't use multi threads.
+	// moveToThread(StelQuickView::getInstance().thread());
 }
 
 GPSMgr::~GPSMgr()
@@ -64,11 +63,14 @@ void GPSMgr::init()
 
 void GPSMgr::positionUpdated(const QGeoPositionInfo &info)
 {
+	if (!info.isValid()) return;
 	StelLocation loc;
 	loc.planetName = "Earth";
 	loc.latitude = info.coordinate().latitude();
 	loc.longitude = info.coordinate().longitude();
 	loc.altitude = info.coordinate().altitude();
+	if (info.coordinate().altitude() == qQNaN())
+		loc.altitude = 0;
 	loc.name = "GPS";
 	StelApp::getInstance().getCore()->moveObserverTo(loc, 0.);
 	StelApp::getInstance().getCore()->setDefaultLocationID(loc.getID());
@@ -94,14 +96,12 @@ void GPSMgr::setEnabled(bool value)
 		return;
 	if (isEnabled() == value)
 		return;
-#ifdef Q_OS_IOS
 	// We can only call this from the main thread.  Otherwise it does not work on iOS.
 	if (this->thread() != QThread::currentThread())
 	{
 		QMetaObject::invokeMethod(this, "setEnabled", Qt::AutoConnection, Q_ARG(bool, value));
 		return;
 	}
-#endif
 	state = value ? Searching : Disabled;
 
 	if (value && !source)

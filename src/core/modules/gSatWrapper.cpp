@@ -74,8 +74,7 @@ Vec3f gSatWrapper::getTEMEPos()
 	Vec3f returnedVector;
 	if (pSatellite != NULL)
 	{
-		gVector position;
-		position = pSatellite->getPos();
+		const gVector& position = pSatellite->getPos();
 		returnedVector.set(position[0], position[1], position[2]);
 	}
 	else

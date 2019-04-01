@@ -77,6 +77,7 @@ void Satellites::deinit()
 
 Satellites::~Satellites()
 {
+	deinit();
 }
 
 
@@ -1449,12 +1450,24 @@ void Satellites::update(double deltaTime)
 	if (StelApp::getInstance().getCore()->getCurrentLocation().planetName != earth->getEnglishName() || !isValidRangeDates() || (!fader && fader.getInterstate() <= 0.))
 		return;
 
+	// Counter to wake up the satellites.
+	// wake_nb is the number of satellites we awake at each update.  If
+	// we don't see the hints we can make that lower.
+	const int wake_nb = hintsFader.getInterstate() == 0.0 ? 32 : 128;
+	static int t = 0;
+	t += wake_nb;
+	if (t >= satellites.size()) t = 0;
+
 	fader.update((int)(deltaTime*1000));
 	hintsFader.update((int)(deltaTime*1000));
 
-	foreach(const SatelliteP& sat, satellites)
+	for (int i = 0; i < satellites.size(); i++)
 	{
-		if (sat->initialized && sat->displayed)
+		Satellite* sat = satellites.at(i).data();
+		// Wake up the next batch of asleep satellites.
+		if (i >= t && i < t + wake_nb) sat->asleep = false;
+
+		if (!sat->asleep && sat->initialized && sat->displayed)
 			sat->update(deltaTime);
 	}
 }
@@ -1475,8 +1488,8 @@ void Satellites::draw(StelCore* core)
 	Satellite::viewportHalfspace = painter.getProjector()->getBoundingCap();
 	foreach (const SatelliteP& sat, satellites)
 	{
-		if (sat && sat->initialized && sat->displayed)
-			sat->draw(core, painter, 1.0);
+		if (sat && !sat->asleep && sat->initialized && sat->displayed)
+			sat->asleep = !sat->draw(core, painter, 1.0);
 	}
 
 	if (GETSTELMODULE(StelObjectMgr)->getFlagSelectedObjectPointer())

@@ -20,6 +20,7 @@
 #ifndef _STELCORE_HPP_
 #define _STELCORE_HPP_
 
+#include "config.h"
 #include "StelProjector.hpp"
 #include "StelProjectorType.hpp"
 #include "StelLocation.hpp"
@@ -77,7 +78,8 @@ public:
 		ProjectionHammer,		//!< Hammer-Aitoff projection
 		ProjectionCylinder,		//!< Cylinder projection
 		ProjectionMercator,		//!< Mercator projection
-		ProjectionOrthographic		//!< Orthographic projection
+		ProjectionOrthographic,		//!< Orthographic projection
+		ProjectionDefault = 1000,
 	};
 
 	//! Available refraction mode.
@@ -152,7 +154,7 @@ public:
 
 	//! Get a new instance of projector using the given modelview transformatione.
 	//! If not specified the projection used is the one currently used as default.
-	StelProjectorP getProjection(StelProjector::ModelViewTranformP modelViewTransform, ProjectionType projType=(ProjectionType)1000) const;
+	StelProjectorP getProjection(StelProjector::ModelViewTranformP modelViewTransform, ProjectionType projType=ProjectionDefault) const;
 
 	//! Get the current tone reproducer used in the core.
 	StelToneReproducer* getToneReproducer();

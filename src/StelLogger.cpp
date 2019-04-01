@@ -26,15 +26,15 @@
 #endif
 
 // Init statics variables.
-QFile StelLogger::logFile;
+QFile* StelLogger::logFile;
 QString StelLogger::log;
 
 void StelLogger::init(const QString& logFilePath)
 {
-	logFile.setFileName(logFilePath);
+	logFile = new QFile(logFilePath);
 
 #if !(defined(Q_OS_ANDROID) || defined(Q_OS_IOS))
-	if (logFile.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text | QIODevice::Unbuffered))
+	if (logFile->open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text | QIODevice::Unbuffered))
 		qInstallMessageHandler(StelLogger::debugLogHandler);
 #endif
 
@@ -137,7 +137,6 @@ void StelLogger::init(const QString& logFilePath)
 #else
 	writeLog("Unknown operating system");
 #endif
-
 	// write GCC version
 #if defined __GNUC__ && !defined __clang__
 	#ifdef __MINGW32__
@@ -151,7 +150,6 @@ void StelLogger::init(const QString& logFilePath)
 #else
 	writeLog("Unknown compiler");
 #endif
-
 	// write Qt version
 	writeLog(QString("Qt runtime version: %1").arg(qVersion()));
 	writeLog(QString("Qt compilation version: %1").arg(QT_VERSION_STR));
@@ -166,7 +164,7 @@ void StelLogger::init(const QString& logFilePath)
 	// write memory and CPU info
 #ifdef Q_OS_LINUX
 
-#ifndef BUILD_FOR_MAEMO
+#if !(defined(Q_OS_ANDROID) || defined(Q_OS_IOS))
 	QFile infoFile("/proc/meminfo");
 	if(!infoFile.open(QIODevice::ReadOnly | QIODevice::Text))
 		writeLog("Could not get memory info.");
@@ -345,7 +343,9 @@ void StelLogger::init(const QString& logFilePath)
 void StelLogger::deinit()
 {
 	qInstallMessageHandler(0);
-	logFile.close();
+	logFile->close();
+	delete logFile;
+	logFile = NULL;
 }
 
 void StelLogger::debugLogHandler(QtMsgType, const QMessageLogContext&, const QString& msg)
@@ -356,7 +356,11 @@ void StelLogger::debugLogHandler(QtMsgType, const QMessageLogContext&, const QSt
 
 void StelLogger::writeLog(QString msg)
 {
+#if !(defined(Q_OS_ANDROID) || defined(Q_OS_IOS))
 	msg += "\n";
-	logFile.write(qPrintable(msg), msg.size());
+	logFile->write(qPrintable(msg), msg.size());
 	log += msg;
+#else
+	Q_UNUSED(msg);
+#endif
 }

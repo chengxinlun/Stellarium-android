@@ -1,7 +1,7 @@
 
 TARGET = stellarium
 VERSION = 0.12.3
-MOBILE_VERSION = 1.24.4
+MOBILE_VERSION = 1.29.6_m
 INCLUDEPATH += \
 	. src/ src/core src/core/modules src/core/external \
 	src/core/external/glues_stel/source src/core/external/kfilter \
@@ -452,7 +452,7 @@ OTHER_FILES += \
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_EXTRA_LIBS = \
-        /home/cheng/stellarium/src/../openssl-1.1.0h/libcrypto.so \
+        $$PWD/../openssl-1.1.0h/libcrypto.so \
         $$PWD/../openssl-1.1.0h/libssl.so
 }
 

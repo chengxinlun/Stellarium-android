@@ -229,7 +229,8 @@ private:
 	//! Mask controlling which info display flags should be honored.
 	static StelObject::InfoStringGroupFlags flagsMask;
 
-	void draw(StelCore *core, StelPainter& painter, float maxMagHints);
+	// Return true if the satellite was visible.
+	bool draw(StelCore *core, StelPainter& painter, float maxMagHints);
 
 	//Satellite Orbit Position calculation
 	gSatWrapper *pSatWrapper;
@@ -245,6 +246,12 @@ private:
 	double    lastEpochCompForOrbit; //measured in Julian Days
 	double    epochTime;  //measured in Julian Days
 	QList<Vec3f> orbitPoints; //orbit points represented by ElAzPos vectors
+
+	// Used for optimization.  Where a satellite is not visible, we put it
+	// in the asleep state, where it is not updated or rendered anymore.
+	// The satellite manager takes care of waking up satellites after a
+	// while.
+	bool asleep = false;
 };
 
 typedef QSharedPointer<Satellite> SatelliteP;

@@ -47,6 +47,32 @@
 #include <QFileInfo>
 #include <QDir>
 
+// Qml Renderer that render the sky in the stellarium item.
+class SkyRenderer : public QQuickFramebufferObject::Renderer
+{
+public:
+	virtual QOpenGLFramebufferObject *createFramebufferObject(const QSize &size) Q_DECL_OVERRIDE
+	{
+		qDebug() << "Creating FBO" << size;
+		QOpenGLFramebufferObjectFormat format;
+		format.setAttachment(QOpenGLFramebufferObject::CombinedDepthStencil);
+		return new QOpenGLFramebufferObject(size, format);
+	}
+
+	virtual void render() Q_DECL_OVERRIDE
+	{
+		static double lastPaint = -1.;
+		double newTime = StelApp::getTotalRunTime();
+		if (lastPaint<0)
+			lastPaint = newTime-0.01;
+		StelApp::getInstance().update(newTime-lastPaint);
+		lastPaint = newTime;
+		StelApp::getInstance().draw();
+		update();
+	}
+};
+
+
 StelQuickStelItem::StelQuickStelItem()
 {
 	forwardClicks = false;
@@ -54,6 +80,7 @@ StelQuickStelItem::StelQuickStelItem()
 	connect(timer, SIGNAL(timeout()), this, SLOT(update()));
 	timer->setInterval(100);
 	timer->start();
+	setMirrorVertically(true);
 	setAcceptHoverEvents(true);
 	setAcceptedMouseButtons(Qt::AllButtons);
 
@@ -77,6 +104,11 @@ StelQuickStelItem::StelQuickStelItem()
 
 	mainThreadProxy = new MainThreadProxy;
 	mainThreadProxy->moveToThread(StelApp::getInstance().thread());
+}
+
+QQuickFramebufferObject::Renderer* StelQuickStelItem::createRenderer() const
+{
+	return new SkyRenderer;
 }
 
 bool StelQuickStelItem::eventFilter(QObject* obj, QEvent* event)
@@ -252,6 +284,11 @@ QString StelQuickStelItem::getPrintableTime() const
 	QString time = StelApp::getInstance().getLocaleMgr().getPrintableDateLocal(jd) + " "
 			+ StelApp::getInstance().getLocaleMgr().getPrintableTimeLocal(jd);
 	return time.trimmed();
+}
+
+bool StelQuickStelItem::isTimeNow() const
+{
+	return StelApp::getInstance().getCore()->getIsTimeNow();
 }
 
 bool StelQuickStelItem::getDragTimeMode() const
@@ -526,9 +563,11 @@ QString StelQuickStelItem::getModel() const
 {
 #ifdef Q_OS_ANDROID
 	return StelAndroid::getModel();
-#else
-	return "";
 #endif
+#ifdef Q_OS_IOS
+	return "iPhone";
+#endif
+	return "";
 }
 
 bool StelQuickStelItem::isDay() const
