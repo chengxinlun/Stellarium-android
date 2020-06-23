@@ -243,7 +243,6 @@ void SolarSystem::loadPlanets()
 		qWarning() << "ERROR while loading ssystem_minor.ini (unable to find data/ssystem_minor.ini): " << endl;
 		return;
 	}
-
 	foreach (const QString& solarSystemFile, solarSystemFiles)
 	{
 		if (loadPlanets(solarSystemFile))
@@ -284,11 +283,76 @@ void SolarSystem::loadPlanets()
 		}
 	}
 
-	shadowPlanetCount = 0;
+    // Modified: load 1000 comets file (Cheng Xinlun, Jun 23 2020)
+    qDebug() << "Loading Solar System data (3: 1000 comets)";
+    QStringList solarSystemCometFiles = StelFileMgr::findFileInAllPaths("data/ssystem_1000comets.ini");
+    if (solarSystemCometFiles.isEmpty())
+    {
+        qWarning() << "ERROR while loading ssystem_1000comets.ini (unable to find data/ssystem_1000comets.ini):" << Qt::endl;
+        return;
+    }
+    foreach (const QString& solarSystemFile, solarSystemCometFiles)
+    {
+        if (loadPlanets(solarSystemFile))
+        {
+            qDebug() << "File ssystem_1000comets.ini is loaded successfully...";
+            break;
+        }
+        else
+        {
+            qDebug() << "Removing comets";
+            foreach (PlanetP p, systemPlanets)
+            {
+                p->satellites.clear();
+                p.clear();
+            }
+            systemPlanets.clear();
+            if (solarSystemFile.contains(StelFileMgr::getUserDir()))
+            {
+                QString newName = QString("%1/data/ssystem-%2.ini").arg(StelFileMgr::getUserDir()).arg(QDateTime::currentDateTime().toString("yyyyMMddThhmmss"));
+                if (QFile::rename(solarSystemFile, newName))
+                    qWarning() << "Invalid Solar System file" << QDir::toNativeSeparators(solarSystemFile) << "has been renamed to" << QDir::toNativeSeparators(newName);
+                else
+                {
+                    qWarning() << "Invalid Solar System file" << QDir::toNativeSeparators(solarSystemFile) << "cannot be removed!";
+                    qWarning() << "Please either delete it, rename it or move it elsewhere.";
+                }
+            }
+        }
+    }
 
-	foreach (const PlanetP& planet, systemPlanets)
-		if(planet->parent != sun || !planet->satellites.isEmpty())
-			shadowPlanetCount++;
+    // Modified: load user solar system object file (Cheng Xinlun, Jun 23 2020)
+    qDebug() << "Loading Solar System data (4: user-defined solar system objects)";
+    QStringList solarSystemUserFiles = StelFileMgr::findFileInAllPaths("data/ssystem_user.ini", StelFileMgr::Flags(StelFileMgr::Writable|StelFileMgr::File));
+    if (solarSystemUserFiles.isEmpty())
+    {
+        qWarning() << "ERROR while loading ssystem_user.ini (unable to find data/ssystem_user.ini):" << Qt::endl;
+        return;
+    }
+    foreach (const QString& solarSystemFile, solarSystemUserFiles)
+    {
+        if (loadPlanets(solarSystemFile))
+        {
+            qDebug() << "File ssystem_user.ini is loaded successfully...";
+            break;
+        }
+        else
+        {
+            qDebug() << "Removing user-defined bodies";
+            foreach (PlanetP p, systemPlanets)
+            {
+                p->satellites.clear();
+                p.clear();
+            }
+            systemPlanets.clear();
+        }
+    }
+
+    shadowPlanetCount = 0;
+
+    foreach (const PlanetP& planet, systemPlanets)
+        if(planet->parent != sun || !planet->satellites.isEmpty())
+            shadowPlanetCount++;
 }
 
 bool SolarSystem::loadPlanets(const QString& filePath)

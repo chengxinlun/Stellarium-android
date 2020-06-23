@@ -1,7 +1,7 @@
 
 TARGET = stellarium
 VERSION = 0.12.3
-MOBILE_VERSION = 1.29.6_m
+MOBILE_VERSION = 1.29.6_m_1
 INCLUDEPATH += \
 	. src/ src/core src/core/modules src/core/external \
 	src/core/external/glues_stel/source src/core/external/kfilter \
@@ -106,8 +106,8 @@ DEFINES += PACKAGE_VERSION_NOSTR=$${VERSION}
 DEFINES += MOBILE_GUI_VERSION_NOSTR=$${MOBILE_VERSION}
 DEFINES += INSTALL_DATADIR_NOSTR=
 
-QMAKE_CFLAGS += -include src/config.h
-QMAKE_CXXFLAGS += -include src/config.h
+#QMAKE_CFLAGS += -include src/config.h
+#QMAKE_CXXFLAGS += -include src/config.h
 
 contains(QT, quick) {
 	DEFINES += USE_QUICKVIEW
@@ -458,9 +458,26 @@ contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
 
 DISTFILES += \
     android/AndroidManifest.xml \
+    android/AndroidManifest.xml \
+    android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew \
+    android/gradlew \
+    android/gradlew.bat \
+    android/res/drawable-hdpi/icon.png \
+    android/res/drawable-ldpi/icon.png \
+    android/res/drawable-mdpi/icon.png \
+    android/res/drawable-xhdpi/icon.png \
+    android/res/drawable/icon.png \
+    android/res/values/libs.xml \
     android/res/values/libs.xml \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew.bat
+    android/gradlew.bat \
+    android/res/values/strings.xml \
+    android/src/com/noctuasoftware/stellarium/Stellarium.java
+android: include(/home/cheng/Android/android_openssl/openssl.pri)
+
+ANDROID_EXTRA_LIBS = /home/cheng/Android/android_openssl/no-asm/latest/arm/libcrypto_1_1.so /home/cheng/Android/android_openssl/no-asm/latest/arm/libssl_1_1.so /home/cheng/Android/android_openssl/no-asm/latest/arm64/libcrypto_1_1.so /home/cheng/Android/android_openssl/no-asm/latest/arm64/libssl_1_1.so /home/cheng/Android/android_openssl/no-asm/latest/x86/libcrypto_1_1.so /home/cheng/Android/android_openssl/no-asm/latest/x86/libssl_1_1.so /home/cheng/Android/android_openssl/no-asm/latest/x86_64/libcrypto_1_1.so /home/cheng/Android/android_openssl/no-asm/latest/x86_64/libssl_1_1.so
