@@ -1,0 +1,46 @@
+name: Build for Android
+
+on:
+  push:
+    tags:
+      - v*
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Checkout submodules
+      uses: srt32/git-actions@v0.0.3
+      with:
+        args: git submodule update --init --recursive
+    - name: Cache Qt
+      id: cache-qt
+      uses: actions/cache@v1
+      with:
+        path: ../Qt
+        key: ${{ runner.os }}-QtCache
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        target: 'android'
+        version: '5.15.1'
+        modules: 'qtcharts qtwebengine qtscript'
+        cached: ${{ steps.cache-qt.outputs.cache-hit }}
+    - name: qmake apk
+      run: |
+        export ANDROID_SDK_ROOT=$ANDROID_HOME
+        export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk-bundle
+        qmake
+        make -j12
+        make apk
+    - name: show filetrees
+      run: |
+        ls -R
+    - uses: actions/upload-artifact@v1
+      with:
+        name: Debug-APK
+        path: android-build//build/outputs/apk/debug/android-build-debug.apk
