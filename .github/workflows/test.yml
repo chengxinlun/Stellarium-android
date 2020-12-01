@@ -1,4 +1,4 @@
-name: Build for Android
+name: detected openssl
 
 on:
   push:
