@@ -32,4 +32,5 @@ jobs:
         cached: ${{ steps.cache-qt.outputs.cache-hit }}
     - name: show filetrees
       run: |
-        ls -R /usr/local/lib/android/sdk/android_openssl
+        find $ANDROID_HOME -name "libssl.so"
+        ls -R $ANDROID_HOME/android_openssl
