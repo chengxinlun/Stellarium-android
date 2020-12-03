@@ -478,6 +478,23 @@ DISTFILES += \
     android/gradlew.bat \
     android/res/values/strings.xml \
     android/src/com/noctuasoftware/stellarium/Stellarium.java
-android: include(/home/cheng/Android/android_openssl/openssl.pri)
 
-ANDROID_EXTRA_LIBS = /home/cheng/Android/android_openssl/no-asm/latest/arm/libcrypto_1_1.so /home/cheng/Android/android_openssl/no-asm/latest/arm/libssl_1_1.so /home/cheng/Android/android_openssl/no-asm/latest/arm64/libcrypto_1_1.so /home/cheng/Android/android_openssl/no-asm/latest/arm64/libssl_1_1.so /home/cheng/Android/android_openssl/no-asm/latest/x86/libcrypto_1_1.so /home/cheng/Android/android_openssl/no-asm/latest/x86/libssl_1_1.so /home/cheng/Android/android_openssl/no-asm/latest/x86_64/libcrypto_1_1.so /home/cheng/Android/android_openssl/no-asm/latest/x86_64/libssl_1_1.so
+android: include($${ANDROID_SDK_ROOT}/android_openssl/openssl.pri)
+
+# ANDROID_EXTRA_LIBS = \
+# $${ANDROID_SDK_ROOT}/android_openssl/no-asm/latest/arm/libcrypto_1_1.so \
+# $${ANDROID_SDK_ROOT}/android_openssl/no-asm/latest/arm/libssl_1_1.so \
+# $${ANDROID_SDK_ROOT}/android_openssl/no-asm/latest/arm64/libcrypto_1_1.so \
+# $${ANDROID_SDK_ROOT}/android_openssl/no-asm/latest/arm64/libssl_1_1.so \
+# $${ANDROID_SDK_ROOT}/android_openssl/no-asm/latest/x86/libcrypto_1_1.so \
+# $${ANDROID_SDK_ROOT}/android_openssl/no-asm/latest/x86/libssl_1_1.so \
+# $${ANDROID_SDK_ROOT}/android_openssl/no-asm/latest/x86_64/libcrypto_1_1.so \
+# $${ANDROID_SDK_ROOT}/android_openssl/no-asm/latest/x86_64/libssl_1_1.so
+
+contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
+    ANDROID_EXTRA_LIBS = \
+        $$PWD/openssl/armeabi-v7a/libcrypto.so \
+        $$PWD/openssl/armeabi-v7a/libssl.so
+        $$PWD/libcrypto.so \
+        $$PWD/libssl.so
+}
